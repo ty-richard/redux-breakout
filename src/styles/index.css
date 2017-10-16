@@ -1,0 +1,24 @@
+.app {
+  padding: 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  text-align: center;
+  font-size: 26px;
+}
+
+.delete-button {
+  cursor: pointer;
+  float: right;
+}
+
+.reminder-list {
+  padding-top: 10px;
+}
+
+.list-item {
+  display: inline-block;
+}
