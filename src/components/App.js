@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Form, FormControl, FormGroup, Button } from 'react-bootstrap'
 import ReminderItem from './ReminderItem'
-import { addReminder } from '../actions'
+import { addReminder, deleteAll } from '../actions'
 import { connect } from 'react-redux'
 
 class App extends Component {
@@ -12,20 +12,30 @@ class App extends Component {
 			dueDate:''
 		}
 	}
+
 	addReminder() {
-		let { text, dueDate } = this.state
-		this.props.addReminder(text, dueDate)
+		this.props.addReminder(this.state.text, this.state.dueDate)
+		this.setState({
+			text: '',
+			dueDate: ''
+		})
+		document.getElementById("reminder-form").reset();
 	}
+
+	deleteAll() {
+		this.props.deleteAll()
+	}
+
 	render() {
 		return (
 			<div className='app'>
 				<div className='title'>Reminder Pro</div>
 				{' '}
-				<Form inline>
+				<Form id='reminder-form'inline>
 					<FormGroup>
 						<FormControl
 							type='text'
-							placeholder='I have too...'
+							placeholder='I have to...'
 							onChange={event => this.setState({ text: event.target.value })}
 						></FormControl>
 					</FormGroup>
@@ -44,6 +54,12 @@ class App extends Component {
 					</Button>
 				</Form>
 				<ReminderItem />
+				{
+					this.props.reminders.length > 1 ?
+						<Button bsStyle='danger' onClick={ () => this.deleteAll() }>Delete All</Button>
+					:
+					<div></div>
+				}
 			</div>
 		)
 	}
@@ -53,4 +69,4 @@ function mapStateToProps(state) {
 	return state
 }
 
-export default connect(mapStateToProps, { addReminder })(App)
+export default connect(mapStateToProps, { addReminder, deleteAll })(App)

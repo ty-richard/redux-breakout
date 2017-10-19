@@ -9,7 +9,6 @@ export function reminder(action) {
 
 export function deleteReminderById(state = [], id) {
   return state.filter(reminder => {
-    if (reminder.id !== id);
-      return reminder;
+    return reminder.id !== id ? reminder : null
   })
 }
